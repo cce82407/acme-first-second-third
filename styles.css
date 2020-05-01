@@ -1,0 +1,47 @@
+h1{
+    font-family: cursive;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.firstBox, .secondBox, .thirdBox {
+    border: solid 1px hotpink;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 75vh;
+    width: 25%;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    text-align: center;
+    border-radius: .5rem;
+}
+
+.goRightButton, .goLeftButton{
+    background-color: pink;
+    display: block;
+    height: 2rem;
+    padding: 5px;
+    margin: 3px;
+}
+
+
+.notSelected,.selected {
+    height: 2rem;
+    display: block;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.selected {
+    background-color: plum;
+    border: solid 1px purple;
+}
+
