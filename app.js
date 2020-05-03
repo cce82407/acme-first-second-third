@@ -10,21 +10,24 @@ const state = {
 }
 
 const create = (type,className) => {
-        const element = document.createElement(type)
-        if(className){
-            element.classList.add(className)
-        }
-        return element
+    const element = document.createElement(type)
+    if(className){
+        element.classList.add(className)
+    }
+    return element
 }
-    
+
+//Function that creates the main container of the page and all of the elements on the page.
 const createContainer = () =>{
     const container = create('div', 'container')
     const fLeftButton = create('button', 'goLeftButton')
+    fLeftButton.disabled = true
     const fRightButton = create('button', 'goRightButton')
     const sLeftButton = create('button', 'goLeftButton')
     const sRightButton = create('button', 'goRightButton')
     const tLeftButton = create('button', 'goLeftButton')
     const tRightButton = create('button', 'goRightButton')
+    tRightButton.disabled = true
     
     fRightButton.innerText = ">"
     fLeftButton.innerText = "<"
@@ -34,23 +37,23 @@ const createContainer = () =>{
     tLeftButton.innerText = "<"
 
     const first = create('div','firstBox')
-    first.innerHTML = 'FIRST'
-    first.append(fLeftButton, fRightButton)
-    
+    const firstText = create('p')
+    firstText.innerText = 'FIRST'
+    first.append(fLeftButton, fRightButton, firstText)
+
     const second = create('div','secondBox')
-    second.innerHTML = 'SECOND'
-    second.append(sLeftButton, sRightButton)
+    const secondText = create('p')
+    secondText.innerHTML = 'SECOND'
+    second.append(sLeftButton, sRightButton, secondText)
 
     const third = create('div','thirdBox')
-    third.innerHTML = 'THIRD'
-    third.append(tLeftButton, tRightButton)
+    const thirdText = create('p')
+    thirdText.innerHTML = 'THIRD'
+    third.append(tLeftButton, tRightButton, thirdText)
     
     container.append(first, second, third)
 
-    
-
-   
-
+    //Function that creates a div for useres and places the users in the different boxes based on their slots.
     const createUser = ({id, name, slot, selected}) => {
         const user = create('div', selected  ? 'selected':'notSelected')
         user.setAttribute('id', id)
@@ -65,38 +68,62 @@ const createContainer = () =>{
         if (slot === 'third'){
             third.append(user)
         }
+
+        //Event listner that toggles the selected property when the name is selected.
         user.addEventListener('click', (ev) => {
             const stateUser = state.customers[ev.target.id -1]
-            //console.log(typeof ev.target.id)
-            //console.log(typeof state.customers[ev.target.id -1].id)
-            //if (ev.target.id === strUserId){
-                stateUser.selected = !stateUser.selected     
+            stateUser.selected = !stateUser.selected     
+            render()
+        })  
+    }            
+
+    //Button event listners that move the users between the different boxes.
+    tLeftButton.addEventListener('click', (ev) => {
+        const thisUser = third.getElementsByClassName('selected users')
+        let arr = [...thisUser]
+        arr.forEach(element => {
+            const stateUser = state.customers[element.id -1]
+            stateUser.slot = 'second' 
+        })
+        render ()
+    })
         
-
-
-            render()})  
-        }            
-
+    sLeftButton.addEventListener('click', (ev) => {
+        const thisUser = second.getElementsByClassName('selected users')
+        let arr = [...thisUser]
+        arr.forEach(element => {
+            const stateUser = state.customers[element.id -1]
+            stateUser.slot = 'first' 
+        })
+        render ()
+    })    
     
-        tLeftButton.addEventListener('click', (ev) => {
-            const thisUser = third.getElementsByClassName('users')
+    sRightButton.addEventListener('click', (ev) => {
+        const thisUser = second.getElementsByClassName('selected users')
+        let arr = [...thisUser]
+        arr.forEach(element => {
+            const stateUser = state.customers[element.id -1]
+            stateUser.slot = 'third' 
+        })
+        render ()
+    })   
+                
+    fRightButton.addEventListener('click', (ev) => {
+        const thisUser = first.getElementsByClassName('selected users')
+        let arr = [...thisUser]
+        arr.forEach(element => {
+            const stateUser = state.customers[element.id -1]
+            stateUser.slot = 'second' 
+        })
+        render ()
+    })    
             
-            const test = [...thisUser][0]
-            console.log(test)
-        })    
-        
-    
-    
-    
-    
-
+    //Map function that creates the new user to update the state.
     state.customers.map(user => createUser(user))
-    //console.log(state.customers)
     return container
 }
 
-
-
+//Render Function
 const render = () => {
     app.innerHTML = ''
     const title = create('h1')

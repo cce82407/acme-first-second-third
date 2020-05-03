@@ -1,4 +1,4 @@
-h1{
+h1 {
     font-family: cursive;
     text-align: center;
 }
@@ -12,7 +12,7 @@ h1{
 
 .firstBox, .secondBox, .thirdBox {
     border: solid 1px hotpink;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: cursive;
     height: 75vh;
     width: 25%;
     font-weight: bold;
@@ -23,6 +23,10 @@ h1{
     border-radius: .5rem;
 }
 
+p {
+    font-size: 2rem;
+}
+
 .goRightButton, .goLeftButton{
     background-color: pink;
     display: block;
@@ -31,6 +35,12 @@ h1{
     margin: 3px;
 }
 
+.firstBox > .goLeftButton{
+    background-color: lightgrey;
+}
+.thirdBox > .goRightButton{
+    background-color: lightgray;
+}
 
 .notSelected,.selected {
     height: 2rem;
@@ -42,6 +52,5 @@ h1{
 
 .selected {
     background-color: plum;
-    border: solid 1px purple;
 }
 
